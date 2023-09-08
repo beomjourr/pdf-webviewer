@@ -11,3 +11,52 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.swiper {
+  height: 752px;
+}
+
+.swiper-zoom-container img {
+  image-rendering: optimizeQuality;  /* For some browsers like Firefox */
+  image-rendering: -webkit-optimize-contrast; /* Older Webkit browsers */
+  transform: translate3d(0,0,0); /* Ensures hardware acceleration */
+}
+
+
+
+.pdf-viewer {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.page-container {
+  display: flex;
+  justify-content: center;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.test-flex {
+  position: relative;
+  display: flex;
+  flex-grow:3;
+}
+
+/* .test-1 {
+  background: red;
+  width: 500px;
+  height: 500px;
+}
+
+
+.test-2 {
+  background: blue;
+  width: 50vw;
+  height: 50vh;
+} */

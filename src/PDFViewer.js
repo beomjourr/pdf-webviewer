@@ -7,6 +7,7 @@ import 'swiper/css/zoom';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { nanoid } from 'nanoid'
+import testImg from './heart2.jpg'
 
 import { Zoom, Navigation } from 'swiper/modules';
 function PDFViewer() {
@@ -17,6 +18,8 @@ function PDFViewer() {
 
   const handleZoomChange = (scale) => {
     const swiper = swiperRef.current?.swiper;
+
+    console.log('들어오는 기준은?')
 
     if (!swiper) return;
 
@@ -42,7 +45,7 @@ function PDFViewer() {
         onLoadSuccess={onDocumentLoadSuccess}
       >
         <Swiper
-          slidesPerView={isTwoPageView ? 2 : 1}
+          slidesPerView={1}
           spaceBetween={10}
           pagination={{ clickable: true }}
           onSlideChange={({ activeIndex }) => setPageNumber(activeIndex + 1)}
@@ -54,7 +57,10 @@ function PDFViewer() {
             {Array.from(new Array(numPages || 0), (el, index) => (
               <SwiperSlide key={nanoid()}>
                 <div className="swiper-zoom-container">
-                  <Page className="canvas-page" pageNumber={index + 1} renderAnnotationLayer={false} renderTextLayer={false} />
+                  <div className='swiper-zoom-target' style={{display: 'flex'}}>
+                    <Page className="canvas-page" pageNumber={index + 1} renderAnnotationLayer={false} renderTextLayer={false}/>
+                    {isTwoPageView && <Page className="canvas-page" pageNumber={index + 2} renderAnnotationLayer={false} renderTextLayer={false} />}
+                  </div>
                 </div>
               </SwiperSlide>
             ))}

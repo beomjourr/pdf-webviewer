@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import PDFViewer from './PDFViewer';
+import PDFViewer3 from './PDFViewer3';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
