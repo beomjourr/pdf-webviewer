@@ -48,6 +48,16 @@ code {
   flex-grow:3;
 }
 
+.react-pdf__Page__canvas {
+  max-width: 500px;
+  max-height: 100vh;
+}
+
+.react-pdf__Page {
+  max-width: 500px;
+  max-height: 100vh;
+}
+
 /* .test-1 {
   background: red;
   width: 500px;

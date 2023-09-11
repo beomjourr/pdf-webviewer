@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, memo } from 'react';
 import { Document, Page } from 'react-pdf';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
@@ -17,21 +17,21 @@ function PDFViewer() {
   const swiperRef = useRef(null);
 
   const handleZoomChange = (scale) => {
-    const swiper = swiperRef.current?.swiper;
+    // const swiper = swiperRef.current?.swiper;
 
-    console.log('들어오는 기준은?')
+    // console.log('들어오는 기준은?')
 
-    if (!swiper) return;
+    // if (!swiper) return;
 
-    if (swiper.zoom.scale <= 1) {
-        // Content is zoomed in, so disable swiper
-        swiper.allowSlideNext = false;
-        swiper.allowSlidePrev = false;
-    } else {
-        // Content is zoomed out, so enable swiper
-        swiper.allowSlideNext = true;
-        swiper.allowSlidePrev = true;
-    }
+    // if (swiper.zoom.scale <= 1) {
+    //     // Content is zoomed in, so disable swiper
+    //     swiper.allowSlideNext = false;
+    //     swiper.allowSlidePrev = false;
+    // } else {
+    //     // Content is zoomed out, so enable swiper
+    //     swiper.allowSlideNext = true;
+    //     swiper.allowSlidePrev = true;
+    // }
 };
 
   const onDocumentLoadSuccess = ({ numPages }) => {
@@ -58,8 +58,8 @@ function PDFViewer() {
               <SwiperSlide key={nanoid()}>
                 <div className="swiper-zoom-container">
                   <div className='swiper-zoom-target' style={{display: 'flex'}}>
-                    <Page className="canvas-page" pageNumber={index + 1} renderAnnotationLayer={false} renderTextLayer={false}/>
-                    {isTwoPageView && <Page className="canvas-page" pageNumber={index + 2} renderAnnotationLayer={false} renderTextLayer={false} />}
+                    <Page className="canvas-page" pageNumber={index + 1} renderAnnotationLayer={false} renderTextLayer={false} width={1000} />
+                    {isTwoPageView && <Page className="canvas-page" pageNumber={index + 2} renderAnnotationLayer={false} renderTextLayer={false} width={1000} />}
                   </div>
                 </div>
               </SwiperSlide>
@@ -74,4 +74,4 @@ function PDFViewer() {
   );
 }
 
-export default PDFViewer;
+export default memo(PDFViewer);
