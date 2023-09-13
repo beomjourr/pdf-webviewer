@@ -3,13 +3,11 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import PDFViewer from './PDFViewer';
-import PDFViewer3 from './PDFViewer3';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <PDFViewer />
+    <App />
   </React.StrictMode>
 );
 

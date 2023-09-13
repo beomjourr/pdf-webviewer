@@ -4,12 +4,12 @@ const ToolBar = ({handlePageViewCnt}) => {
 
   const toggleTwoPageView = () => {
     console.log('toggleTwoPageView')
-    handlePageViewCnt(2);
+    handlePageViewCnt(true);
   };
 
   const toggleOnePageView = () => {
     console.log('toggleOnePageView');
-    handlePageViewCnt(1);
+    handlePageViewCnt(false);
   }
 
 
