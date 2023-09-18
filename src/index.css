@@ -11,3 +11,48 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.viewer-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.react-pdf__Page__canvas {
+  max-width: 500px;
+  max-height: 100vh;
+}
+
+.react-pdf__Page {
+  max-width: 500px;
+  max-height: 100vh;
+}
+
+.swiper-slide.two-view-mode:nth-child(2n) {
+  visibility: hidden;
+}
+
+
+/* common */
+.toolbar-container {
+  position: fixed;
+  top: 0;
+  height: 50px;
+  width: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+}
+
+.toolbar-box {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.toolbar-menulist {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
