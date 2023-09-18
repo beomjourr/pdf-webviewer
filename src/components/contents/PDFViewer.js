@@ -19,6 +19,7 @@ function PDFViewer() {
 
   useEffect(() => {
     console.log(getChromeVersion());
+    console.log(file);
     // react 7.x 버전은 크롬 92버전부터 지원 (N형은 82.x)
     if (getChromeVersion() >= 92) {
       console.log('react-pdf 7.3.3 사용중');
