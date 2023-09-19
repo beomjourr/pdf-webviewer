@@ -1,10 +1,10 @@
 import React from 'react';
-import PDFViewer from './components/contents/PDFViewer';
+import PDFContainer from './components/contents/PDFContainer';
 
 function App() {
 
   return (
-    <PDFViewer />
+    <PDFContainer />
   );
 }
 
