@@ -36,6 +36,7 @@ function PDFContainer() {
       reactPdfModule.pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${reactPdfModule.pdfjs.version}/pdf.worker.js`;
       setIsLoadWorker(true);
     }
+    console.log('reactPdfModule 나 바뀜')
   }, [reactPdfModule]);
 
 
