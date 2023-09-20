@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: gray;
+  background: rgb(56, 56, 56);
 }
 
 code {
@@ -19,12 +19,12 @@ code {
 }
 
 .react-pdf__Page__canvas {
-  max-width: 500px;
-  max-height: 100vh;
+  max-width: 40vw !important;
+  height: 100vh !important;
 }
 
 .react-pdf__Page {
-  max-width: 500px;
+  max-width: 40vw;
   max-height: 100vh;
 }
 
@@ -41,6 +41,7 @@ code {
   width: 100%;
   background: rgba(0,0,0,0.5);
   z-index: 100;
+  overflow: hidden;
 }
 
 .toolbar-box {
@@ -139,12 +140,33 @@ code {
 .swiper-scrollbar {
   height: 20px !important;
   animation: slideUp 1s; /* 1s is the duration; adjust as needed */
+  touch-action: none;
+}
+
+.swiper-scrollbar-horizontal {
+  background: rgba(0,0,0,0.6) !important;
+}
+
+.swiper-scrollbar-drag {
+  background: rgb(4, 89, 158) !important;
 }
 
 .swiper-pagination * {
-  background: gray;
-  color: white;
-  padding: 0 15px;
+  background: #d9d9d9;
+  color: black;
+  font-weight: 500;
+  padding: 2px 15px;
   margin: 0 -10px;
   z-index: -1;
+}
+
+.toolbar-container, .swiper-pagination, .swiper-scrollbar {
+  transition: opacity 0.5s;  /* Adjust the duration as required */
+  opacity: 0;  /* Initially hidden */
+}
+
+.toolbar-container.active,
+.swiper-pagination.active, 
+.swiper-scrollbar.active {
+  opacity: 1;  /* Show on hover or click */
 }
