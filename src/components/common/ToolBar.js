@@ -1,4 +1,5 @@
 import React from 'react';
+import { getInitVariables } from '../../utils/InitVariableUtils';
 
 const ToolBar = ({handlePageViewCnt}) => {
 
@@ -16,12 +17,15 @@ const ToolBar = ({handlePageViewCnt}) => {
   return (
     <div className='toolbar-container'>
       <div className='toolbar-box'>
+        <div className='toolbar-subject-info'>
+          {getInitVariables().order_nm + ' | ' + getInitVariables().study_course_nm}
+        </div>
         <div className='toolbar-menulist'>
           <button onClick={toggleTwoPageView}>
-            Toggle Two-Page View
+            Two-Page View
           </button>
           <button onClick={toggleOnePageView}>
-            Toggle One-Page View
+            One-Page View
           </button>
           {/* 리스트 div 영역 */}
         </div>

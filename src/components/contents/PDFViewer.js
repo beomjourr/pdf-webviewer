@@ -5,7 +5,7 @@ import file from '../../data/o_ssah402_01.pdf';
 import 'swiper/css/zoom';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Zoom, Navigation, Pagination } from 'swiper/modules';
+import { Zoom, Navigation, Pagination, Scrollbar } from 'swiper/modules';
 
 function PDFViewer(props) {
   const [numPages, setNumPages] = useState(null);
@@ -26,7 +26,7 @@ function PDFViewer(props) {
         spaceBetween={props.isTwoPageView ? -500 : 0}
         slidesPerGroup={props.isTwoPageView ? 2 : 1}
         pagination={{
-          clickable: true
+          type: 'fraction'
         }}
         navigation={{ clickable: true }}
         onSlideChange={({ activeIndex }) => {
@@ -34,8 +34,16 @@ function PDFViewer(props) {
         }}
         zoom={true}
         ref={swiperRef}
-        modules={[Zoom, Navigation, Pagination]}
+        modules={[Zoom, Navigation, Pagination, Scrollbar]}
         initialSlide={props.initialSlideNum}
+        scrollbar= {{
+          draggable: true,
+          clickable: true,
+        }}
+        onTouchStart={() => {
+          const paginationEl = this.el.querySelector('.swiper-pagination');
+          paginationEl.style.animation = 'fadeIn 1s forwards';
+        }}
       >
           {Array.from(new Array(numPages || 0), (_, index) => (
             <SwiperSlide key={index} className={props.isTwoPageView ? 'two-view-mode' : ''}>
@@ -52,4 +60,4 @@ function PDFViewer(props) {
   );
 }
 
-export default PDFViewer;
+export default React.memo(PDFViewer);
