@@ -41,41 +41,47 @@ function PDFContainer() {
     }
   }, [reactPdfModule]);
 
-  const onDocumentLoadSuccess = ({ numPages }) => {
-    console.log('onDocumentLoadSuccess');
-    dispatch(updatePdfTotalPage(numPages));
-  };
-
   useEffect(() => {
     if (pdfTotalPage) {
       const pdfDocument = document.querySelector('.react-pdf__Document');
 
       if (!pdfDocument) return;
+    
+      pdfDocument.addEventListener('click', (e) => onClickPdfDocument(e))
 
-      pdfDocument.addEventListener('click', function(e) {
-        if (e.target.closest('.swiper-scrollbar')) {
-          return;
-        }
-
-        const swiperScrollbar = document.querySelector('.swiper-scrollbar');
-        const swiperPagination = document.querySelector('.swiper-pagination');
-        const toolbarBox = document.querySelector('.toolbar-container');
-  
-        console.log(toolbarBox, swiperScrollbar, swiperPagination)
-        if (toolbarBox && swiperScrollbar && swiperPagination) {
-          if (toolbarBox.classList.contains('active') &&swiperScrollbar.classList.contains('active') && swiperPagination.classList.contains('active')) {
-            toolbarBox.classList.remove('active');
-            swiperScrollbar.classList.remove('active');
-            swiperPagination.classList.remove('active');
-          } else {
-            toolbarBox.classList.add('active');
-            swiperScrollbar.classList.add('active');
-            swiperPagination.classList.add('active');
-          }
-        }
+      return (() => {
+        pdfDocument.removeEventListener('click', (e) => onClickPdfDocument(e))
       })
     }
   }, [pdfTotalPage])
+
+  const onDocumentLoadSuccess = ({ numPages }) => {
+    console.log('onDocumentLoadSuccess');
+    dispatch(updatePdfTotalPage(numPages));
+  };
+
+  const onClickPdfDocument = (e) => {
+    if (!e) return;
+    if (e.target.closest('.swiper-scrollbar')) {
+      return;
+    }
+
+    const swiperScrollbar = document.querySelector('.swiper-scrollbar');
+    const swiperPagination = document.querySelector('.swiper-pagination');
+    const toolbarBox = document.querySelector('.toolbar-container');
+
+    if (toolbarBox && swiperScrollbar && swiperPagination) {
+      if (toolbarBox.classList.contains('active') &&swiperScrollbar.classList.contains('active') && swiperPagination.classList.contains('active')) {
+        toolbarBox.classList.remove('active');
+        swiperScrollbar.classList.remove('active');
+        swiperPagination.classList.remove('active');
+      } else {
+        toolbarBox.classList.add('active');
+        swiperScrollbar.classList.add('active');
+        swiperPagination.classList.add('active');
+      }
+    }
+  }
 
   return (
     <div className='viewer-container'>
