@@ -3,7 +3,7 @@ import PDFContainer from "./contents/PDFContainer";
 
 function Root() {
   return (
-    <div className='viewer-container'>
+    <div className='root-container'>
       <ToolBar />
       <PDFContainer />
     </div>

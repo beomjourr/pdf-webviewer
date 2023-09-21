@@ -3,3 +3,9 @@ html, body {
   padding: 0;
   box-sizing: border-box;
 }
+
+.root-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
