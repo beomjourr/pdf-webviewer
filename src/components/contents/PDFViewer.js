@@ -26,8 +26,7 @@ function PDFViewer(props) {
         renderTextLayer={false}
         onRenderSuccess={() => {
           renderSuccessCntRef.current++;
-          console.log(renderSuccessCntRef.current)
-          if (renderSuccessCntRef.current === pdfTotalPage) {
+          if (renderSuccessCntRef.current >= pdfTotalPage - 1) {
             dispatch(updateIsGlobalLoading(false));
             renderSuccessCntRef.current = 0;
           }
