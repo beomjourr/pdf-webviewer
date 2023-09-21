@@ -1,51 +1,17 @@
-import React, { useState, useRef, useEffect} from 'react';
+import React, { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useSelector } from 'react-redux';
+import { Zoom, Navigation, Pagination, Scrollbar } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import 'swiper/css/zoom';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Zoom, Navigation, Pagination, Scrollbar } from 'swiper/modules';
-import { getInitVariables } from '../../utils/InitVariableUtils';
-
+ 
 function PDFViewer(props) {
-  const [numPages, setNumPages] = useState(null);
+  const pdfTotalPage = useSelector((state) => state.global.pdfTotalPage);
+  const isTwoPageView = useSelector((state) => state.global.isTwoPageView);
+  const initialSlideNum = useSelector((state) => state.global.initialSlideNum);
   const swiperRef = useRef(null);
-
-  const onDocumentLoadSuccess = ({ numPages }) => {
-    console.log('onDocumentLoadSuccess');
-    setNumPages(numPages);
-  };
-
-  useEffect(() => {
-    if (numPages) {
-      const pdfDocument = document.querySelector('.react-pdf__Document');
-
-      if (!pdfDocument) return;
-
-      pdfDocument.addEventListener('click', function(e) {
-        if (e.target.closest('.swiper-scrollbar')) {
-          return;
-        }
-
-        const swiperScrollbar = document.querySelector('.swiper-scrollbar');
-        const swiperPagination = document.querySelector('.swiper-pagination');
-        const toolbarBox = document.querySelector('.toolbar-container');
-  
-        console.log(toolbarBox, swiperScrollbar, swiperPagination)
-        if (toolbarBox && swiperScrollbar && swiperPagination) {
-          if (toolbarBox.classList.contains('active') &&swiperScrollbar.classList.contains('active') && swiperPagination.classList.contains('active')) {
-            toolbarBox.classList.remove('active');
-            swiperScrollbar.classList.remove('active');
-            swiperPagination.classList.remove('active');
-          } else {
-            toolbarBox.classList.add('active');
-            swiperScrollbar.classList.add('active');
-            swiperPagination.classList.add('active');
-          }
-        }
-      })
-    }
-  }, [numPages])
 
   const getPdfPageComponent = (currentIndex) => {
     return (
@@ -61,42 +27,34 @@ function PDFViewer(props) {
   }
 
   return (
-    <props.reactPdfModule.Document
-      file={{ url: getInitVariables().file_url }}
-      onLoadSuccess={onDocumentLoadSuccess}
+    <Swiper
+      slidesPerView={1}
+      spaceBetween={isTwoPageView ? -500 : 0}
+      slidesPerGroup={isTwoPageView ? 2 : 1}
+      pagination={{
+        type: 'fraction',
+      }}
+      navigation={{ clickable: true }}
+      zoom={true}
+      ref={swiperRef}
+      modules={[Zoom, Navigation, Pagination, Scrollbar]}
+      initialSlide={initialSlideNum}
+      scrollbar= {{
+        draggable: true,
+        clickable: true,
+      }}
     >
-      <Swiper
-        slidesPerView={1}
-        spaceBetween={props.isTwoPageView ? -500 : 0}
-        slidesPerGroup={props.isTwoPageView ? 2 : 1}
-        pagination={{
-          type: 'fraction',
-        }}
-        navigation={{ clickable: true }}
-        onSlideChange={({ activeIndex }) => {
-          console.log(activeIndex);
-        }}
-        zoom={true}
-        ref={swiperRef}
-        modules={[Zoom, Navigation, Pagination, Scrollbar]}
-        initialSlide={props.initialSlideNum}
-        scrollbar= {{
-          draggable: true,
-          clickable: true,
-        }}
-      >
-          {Array.from(new Array(props.isTwoPageView ? numPages - 1 : numPages || 0), (_, index) => (
-            <SwiperSlide key={index} className={props.isTwoPageView ? 'two-view-mode' : ''}>
-              <div className="swiper-zoom-container">
-                <div className='swiper-zoom-target' style={{display: 'flex'}}>
-                  {getPdfPageComponent(index)}
-                  {props.isTwoPageView && index + 1 < numPages && getPdfPageComponent(index + 1) }
-                </div>
+        {Array.from(new Array(isTwoPageView ? pdfTotalPage - 1 : pdfTotalPage || 0), (_, index) => (
+          <SwiperSlide key={index} className={isTwoPageView ? 'two-view-mode' : ''}>
+            <div className="swiper-zoom-container">
+              <div className='swiper-zoom-target' style={{display: 'flex'}}>
+                {getPdfPageComponent(index)}
+                {isTwoPageView && index + 1 < pdfTotalPage && getPdfPageComponent(index + 1) }
               </div>
-            </SwiperSlide>
-          ))}
-      </Swiper>
-    </props.reactPdfModule.Document>
+            </div>
+          </SwiperSlide>
+        ))}
+    </Swiper>
   );
 }
 

@@ -1,16 +1,19 @@
 import React from 'react';
 import { getInitVariables } from '../../utils/InitVariableUtils';
+import { useDispatch } from 'react-redux';
+import { updateIsTwoPageView } from '../../features/globalSlice';
 
-const ToolBar = ({handlePageViewCnt}) => {
+const ToolBar = () => {
+  const dispatch = useDispatch();
 
   const toggleTwoPageView = () => {
     console.log('toggleTwoPageView')
-    handlePageViewCnt(true);
+    dispatch(updateIsTwoPageView(true));
   };
 
   const toggleOnePageView = () => {
     console.log('toggleOnePageView');
-    handlePageViewCnt(false);
+    dispatch(updateIsTwoPageView(false));
   }
 
 

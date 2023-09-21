@@ -3,15 +3,18 @@ import 'swiper/swiper-bundle.css';
 import 'swiper/css/zoom';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import ToolBar from '../common/ToolBar';
-import PDFViewer from './PDFViewer';
 import { getChromeVersion } from '../../utils/utilFunction';
+import { useDispatch, useSelector } from 'react-redux';
+import { updatePdfTotalPage } from '../../features/globalSlice';
+import { getInitVariables } from '../../utils/InitVariableUtils';
+import PDFViewer from './PDFViewer';
 
 function PDFContainer() {
-  const [isTwoPageView, setIsTwoPageView] = useState(false);
+  const dispatch = useDispatch();
+
   const [reactPdfModule, setReactPdfModule] = useState(null);
   const [isLoadWorker, setIsLoadWorker] = useState(false);
-  const [initialSlideNum, setInitialSlideNum] = useState(0);
+  const pdfTotalPage = useSelector((state) => state.global.pdfTotalPage);
 
   useEffect(() => {
     console.log(getChromeVersion());
@@ -36,19 +39,53 @@ function PDFContainer() {
       reactPdfModule.pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${reactPdfModule.pdfjs.version}/pdf.worker.js`;
       setIsLoadWorker(true);
     }
-    console.log('reactPdfModule 나 바뀜')
   }, [reactPdfModule]);
 
+  const onDocumentLoadSuccess = ({ numPages }) => {
+    console.log('onDocumentLoadSuccess');
+    dispatch(updatePdfTotalPage(numPages));
+  };
+
+  useEffect(() => {
+    if (pdfTotalPage) {
+      const pdfDocument = document.querySelector('.react-pdf__Document');
+
+      if (!pdfDocument) return;
+
+      pdfDocument.addEventListener('click', function(e) {
+        if (e.target.closest('.swiper-scrollbar')) {
+          return;
+        }
+
+        const swiperScrollbar = document.querySelector('.swiper-scrollbar');
+        const swiperPagination = document.querySelector('.swiper-pagination');
+        const toolbarBox = document.querySelector('.toolbar-container');
+  
+        console.log(toolbarBox, swiperScrollbar, swiperPagination)
+        if (toolbarBox && swiperScrollbar && swiperPagination) {
+          if (toolbarBox.classList.contains('active') &&swiperScrollbar.classList.contains('active') && swiperPagination.classList.contains('active')) {
+            toolbarBox.classList.remove('active');
+            swiperScrollbar.classList.remove('active');
+            swiperPagination.classList.remove('active');
+          } else {
+            toolbarBox.classList.add('active');
+            swiperScrollbar.classList.add('active');
+            swiperPagination.classList.add('active');
+          }
+        }
+      })
+    }
+  }, [pdfTotalPage])
 
   return (
     <div className='viewer-container'>
-      <ToolBar handlePageViewCnt={setIsTwoPageView} />
       {reactPdfModule && isLoadWorker &&
-        <PDFViewer
-          reactPdfModule={reactPdfModule}
-          isTwoPageView ={isTwoPageView}
-          initialSlideNum={initialSlideNum}
-        />
+        <reactPdfModule.Document
+          file={{ url: getInitVariables().file_url }}
+          onLoadSuccess={onDocumentLoadSuccess}
+        >
+          <PDFViewer reactPdfModule={reactPdfModule} />
+        </reactPdfModule.Document>
       }
     </div>
   );
