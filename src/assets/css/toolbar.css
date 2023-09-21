@@ -1,0 +1,34 @@
+.toolbar-container {
+  position: fixed;
+  top: 0;
+  height: 30px;
+  width: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+  overflow: hidden;
+}
+
+.toolbar-box {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toolbar-subject-info {
+  margin: 0 10px;
+  color: white;
+  font-weight: 600;
+}
+
+.toolbar-menulist {
+  /* position: absolute; */
+  height: 100%;
+  /* width: 100%; */
+  margin: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

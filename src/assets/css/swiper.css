@@ -1,0 +1,106 @@
+@keyframes paging-ani {
+  from {
+   opacity: 0;
+   transform: translate3d(0, 100%, 0);
+  }
+  to {
+   opacity: 1;
+   transform: translateZ(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%); /* Starts at the bottom */
+  }
+  100% {
+    transform: translateY(0); /* Ends at its original position */
+  }
+}
+
+
+
+.swiper-slide.two-view-mode:nth-child(2n) {
+  visibility: hidden;
+}
+
+.swiper-pagination {
+  animation: fadeInUp 1s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.swiper-pagination-bullet {
+  width: 15px !important;
+  height: 15px !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: black !important;
+  width: 15px !important;
+  height: 15px !important;
+}
+
+.swiper-button-prev:after, .swiper-button-next:after {
+  padding: 100vh 0;
+}
+
+.swiper-button-next, .swiper-button-prev {
+  color: rgb(0, 0, 0, 0) !important;
+}
+
+.swiper-pagination-bullet-active {
+  animation: bounce 0.5s;
+}
+
+.swiper-pagination {
+  bottom: 40px !important;
+  animation: slideUp 1s; /* 1s is the duration; adjust as needed */
+  color: white;
+}
+
+.swiper-scrollbar {
+  height: 20px !important;
+  animation: slideUp 1s; /* 1s is the duration; adjust as needed */
+  touch-action: none;
+}
+
+.swiper-scrollbar-horizontal {
+  background: rgba(0,0,0,0.6) !important;
+}
+
+.swiper-scrollbar-drag {
+  background: rgb(4, 89, 158) !important;
+}
+
+.swiper-pagination * {
+  background: #d9d9d9;
+  color: black;
+  font-weight: 500;
+  padding: 2px 15px;
+  margin: 0 -10px;
+  z-index: -1;
+}
+
+.toolbar-container, .swiper-pagination, .swiper-scrollbar {
+  transition: opacity 0.5s;  /* Adjust the duration as required */
+  opacity: 0;  /* Initially hidden */
+}
+
+.toolbar-container.active,
+.swiper-pagination.active, 
+.swiper-scrollbar.active {
+  opacity: 1;  /* Show on hover or click */
+}
