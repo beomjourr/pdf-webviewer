@@ -1,17 +1,21 @@
 import React, { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Zoom, Navigation, Pagination, Scrollbar } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import 'swiper/css/zoom';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { updateIsGlobalLoading, updateIsTwoPageView } from '../../features/globalSlice';
  
 function PDFViewer(props) {
+  const dispatch = useDispatch();
+
   const pdfTotalPage = useSelector((state) => state.global.pdfTotalPage);
   const isTwoPageView = useSelector((state) => state.global.isTwoPageView);
   const initialSlideNum = useSelector((state) => state.global.initialSlideNum);
   const swiperRef = useRef(null);
+  const renderSuccessCntRef = useRef(0);
 
   const getPdfPageComponent = (currentIndex) => {
     return (
@@ -20,7 +24,19 @@ function PDFViewer(props) {
         pageNumber={currentIndex + 1}
         renderAnnotationLayer={false}
         renderTextLayer={false}
-        onRenderSuccess={() => {console.log('랜더 성공', currentIndex)}}
+        onRenderSuccess={() => {
+          renderSuccessCntRef.current++;
+          console.log(renderSuccessCntRef.current)
+          if (renderSuccessCntRef.current === pdfTotalPage) {
+            dispatch(updateIsGlobalLoading(false));
+            renderSuccessCntRef.current = 0;
+          }
+        }}
+        onLoadError={() => {alert('로드에러남', currentIndex)}}
+        onRenderError={() => {
+          alert('랜더에어남', currentIndex);
+          dispatch(updateIsTwoPageView(!isTwoPageView));
+        }}
         width={1000}
       />
     )

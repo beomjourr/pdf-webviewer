@@ -5,7 +5,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { getChromeVersion } from '../../utils/utilFunction';
 import { useDispatch, useSelector } from 'react-redux';
-import { updatePdfTotalPage } from '../../features/globalSlice';
+import { updateIsGlobalLoading, updatePdfTotalPage } from '../../features/globalSlice';
 import { getInitVariables } from '../../utils/InitVariableUtils';
 import PDFViewer from './PDFViewer';
 
@@ -58,6 +58,7 @@ function PDFContainer() {
   const onDocumentLoadSuccess = ({ numPages }) => {
     console.log('onDocumentLoadSuccess');
     dispatch(updatePdfTotalPage(numPages));
+    dispatch(updateIsGlobalLoading(true));
   };
 
   const onClickPdfDocument = (e) => {
@@ -89,6 +90,7 @@ function PDFContainer() {
         <reactPdfModule.Document
           file={{ url: getInitVariables().file_url }}
           onLoadSuccess={onDocumentLoadSuccess}
+          loading=""
         >
           <PDFViewer reactPdfModule={reactPdfModule} />
         </reactPdfModule.Document>
@@ -97,4 +99,4 @@ function PDFContainer() {
   );
 }
 
-export default PDFContainer;
+export default React.memo(PDFContainer);
