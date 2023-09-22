@@ -30,8 +30,6 @@
   }
 }
 
-
-
 .swiper-slide.two-view-mode:nth-child(2n) {
   visibility: hidden;
 }
@@ -103,4 +101,10 @@
 .swiper-pagination.active, 
 .swiper-scrollbar.active {
   opacity: 1;  /* Show on hover or click */
+}
+
+.swiper-zoom-target {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

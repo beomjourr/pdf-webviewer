@@ -5,6 +5,7 @@ import { updateIsTwoPageView } from '../../features/globalSlice';
 
 const ToolBar = () => {
   const dispatch = useDispatch();
+  const initVariables = getInitVariables() 
 
   const toggleTwoPageView = () => {
     console.log('toggleTwoPageView')
@@ -21,7 +22,7 @@ const ToolBar = () => {
     <div className='toolbar-container'>
       <div className='toolbar-box'>
         <div className='toolbar-subject-info'>
-          {getInitVariables().order_nm + ' | ' + getInitVariables().study_course_nm}
+          {initVariables?.order_nm + ' | ' + initVariables?.study_course_nm}
         </div>
         <div className='toolbar-menulist'>
           <button onClick={toggleTwoPageView}>

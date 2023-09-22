@@ -11,6 +11,7 @@ import PDFViewer from './PDFViewer';
 
 function PDFContainer() {
   const dispatch = useDispatch();
+  const initVariables = getInitVariables();
 
   const [reactPdfModule, setReactPdfModule] = useState(null);
   const [isLoadWorker, setIsLoadWorker] = useState(false);
@@ -88,7 +89,7 @@ function PDFContainer() {
     <div className='viewer-container'>
       {reactPdfModule && isLoadWorker &&
         <reactPdfModule.Document
-          file={{ url: getInitVariables().file_url }}
+          file={{ url: initVariables.file_url }}
           onLoadSuccess={onDocumentLoadSuccess}
           loading=""
         >

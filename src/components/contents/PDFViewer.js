@@ -62,7 +62,7 @@ function PDFViewer(props) {
         {Array.from(new Array(isTwoPageView ? pdfTotalPage - 1 : pdfTotalPage || 0), (_, index) => (
           <SwiperSlide key={index} className={isTwoPageView ? 'two-view-mode' : ''}>
             <div className="swiper-zoom-container">
-              <div className='swiper-zoom-target' style={{display: 'flex'}}>
+              <div className='swiper-zoom-target'>
                 {getPdfPageComponent(index)}
                 {isTwoPageView && index + 1 < pdfTotalPage && getPdfPageComponent(index + 1) }
               </div>
