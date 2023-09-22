@@ -8,10 +8,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateIsGlobalLoading, updatePdfTotalPage } from '../../features/globalSlice';
 import { getInitVariables } from '../../utils/InitVariableUtils';
 import PDFViewer from './PDFViewer';
+import { useGetPdfInfoQuery } from '../../api';
+import useAPIControls from '../../hook/useAPIControls';
+import { initVariables } from '../utils/Global';
 
 function PDFContainer() {
   const dispatch = useDispatch();
-  const initVariables = getInitVariables();
+  const pdfInfoData = useGetPdfInfoQuery({
+    subjLessonNo: initVariables.subjLessonNo,
+    dictionaryNo: initVariables.dictionaryNo,
+  });
+  useAPIControls(pdfInfoData);
 
   const [reactPdfModule, setReactPdfModule] = useState(null);
   const [isLoadWorker, setIsLoadWorker] = useState(false);
@@ -85,11 +92,19 @@ function PDFContainer() {
     }
   }
 
+  const getPdfUrl = () => {
+    if (pdfInfoData?.data?.file_url) {
+      let pdfUrl = 'https://xcdn.home-learn.com';
+      pdfUrl += pdfInfoData?.data?.file_url;
+      return pdfUrl;
+    }
+  }
+
   return (
     <div className='viewer-container'>
-      {reactPdfModule && isLoadWorker &&
+      {reactPdfModule && isLoadWorker && pdfInfoData?.data && 
         <reactPdfModule.Document
-          file={{ url: initVariables.file_url }}
+          file={{ url: getPdfUrl() }}
           onLoadSuccess={onDocumentLoadSuccess}
           loading=""
         >

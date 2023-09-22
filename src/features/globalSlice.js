@@ -7,6 +7,18 @@ const initialState = {
   isGlobalLoading: false,
 };
 
+const loadingsRTKObj = {};
+const _addRTKApiLoading = (str) => {
+  loadingsRTKObj[str] = true;
+  return Object.keys(loadingsRTKObj).length;
+};
+const _removeRTKApiLoading = (str) => {
+  if (loadingsRTKObj[str]) {
+    delete loadingsRTKObj[str];
+  }
+  return Object.keys(loadingsRTKObj).length;
+};
+
 export const globalSlice = createSlice({
   name: 'global',
   initialState,
@@ -27,6 +39,16 @@ export const globalSlice = createSlice({
       console.log('updateIsGlobalLoading', action.payload);
       Object.assign(state, { isGlobalLoading: action.payload });
     },
+    addRTKApiLoading: (state, action) => {
+      _addRTKApiLoading(action.payload);
+      Object.assign(state, { isGlobalRTKApiLoading: true });
+    },
+    removeRTKApiLoading: (state, action) => {
+      const totalRTKApiLoadings = _removeRTKApiLoading(action.payload);
+      if (totalRTKApiLoadings === 0) {
+        Object.assign(state, { isGlobalRTKApiLoading: false });
+      }
+    },
   },
 });
 
@@ -35,6 +57,8 @@ export const {
   updateIsTwoPageView,
   updateInitialSlideNum,
   updateIsGlobalLoading,
+  addRTKApiLoading,
+  removeRTKApiLoading,
 } = globalSlice.actions;
 
 export default globalSlice.reducer;
